@@ -2,6 +2,10 @@ package kr.pe.junho85.demo
 
 import kr.pe.junho85.demo.Customer.*
 import org.springframework.stereotype.Component
+import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toFlux
+import reactor.kotlin.core.publisher.toMono
 import java.util.concurrent.ConcurrentHashMap
 
 @Component
@@ -15,10 +19,10 @@ class CustomerServiceImpl : CustomerService {
 
     val customers = ConcurrentHashMap<Int, Customer>(initialCustomers.associateBy(Customer::id))
 
-    override fun getCustomer(id: Int) = customers[id]
+    override fun getCustomer(id: Int): Mono<Customer>? = customers[id]?.toMono()
 
-    override fun searchCustomers(nameFilter: String): List<Customer> =
+    override fun searchCustomers(nameFilter: String): Flux<Customer> =
             customers.filter {
                 it.value.name.contains(nameFilter, true)
-            }.map(Map.Entry<Int, Customer>::value).toList()
+            }.map(Map.Entry<Int, Customer>::value).toFlux()
 }
