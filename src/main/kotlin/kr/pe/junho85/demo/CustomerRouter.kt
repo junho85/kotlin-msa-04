@@ -13,7 +13,7 @@ class CustomerRouter {
         "/functional".nest {
             "/customer".nest {
                 GET("/") {
-                    ok().body("hello world".toMono(), String::class.java)
+                    ok().body(Customer(1, "functional web").toMono(), Customer::class.java)
                 }
             }
         }
