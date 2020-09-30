@@ -16,12 +16,13 @@ class CustomerRouter {
     fun customerRoutes(): RouterFunction<*> = router {
         "/functional".nest {
             "/customer".nest {
-                GET("/") {
+//                GET("/") {
 //                    ok().body(Customer(1, "functional web").toMono(), Customer::class.java)
 //                    it: ServerRequest ->
 //                        ok().body(Customer(1, "functional web").toMono(), Customer::class.java)
-                    it: ServerRequest -> customerHandler.get(it)
-                }
+//                    it: ServerRequest -> customerHandler.get(it)
+//                }
+                GET("/", customerHandler::get)
             }
         }
     }
