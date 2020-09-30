@@ -8,10 +8,7 @@ import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.router
 
 @Component
-class CustomerRouter {
-    @Autowired
-    lateinit var customerHandler: CustomerHandler
-
+class CustomerRouter(private var customerHandler: CustomerHandler) {
     @Bean
     fun customerRoutes(): RouterFunction<*> = router {
         "/functional".nest {
